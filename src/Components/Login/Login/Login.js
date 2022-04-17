@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Header from '../../Home/Header/Header';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useSignInWithEmailAndPassword, useSendPasswordResetEmail } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.init';
 import SocialLogin from '../SocialLogin/SocialLogin';
 
@@ -25,6 +25,8 @@ const Login = () => {
         error,
     ] = useSignInWithEmailAndPassword(auth);
 
+    const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
+
     if (user) {
         navigate(from, { replace: true });
     }
@@ -40,6 +42,14 @@ const Login = () => {
     }
     const navigateRegister = event => {
         navigate('/register');
+    }
+
+    const resetPassword = async () => {
+        const email = emailRef.current.value;
+
+        await sendPasswordResetEmail(email);
+        alert('sent email');
+
     }
 
     return (
@@ -67,8 +77,10 @@ const Login = () => {
                         Login
                     </Button>
                 </Form>
+
                 <p>New to Weattle? <Link to='/register' className='text-danger pe-auto text-decoration-none' onClick={navigateRegister}>Please Register</Link> </p>
-                <SocialLogin/>
+                <p>Forget Password? <Link to='/register' className='text-danger pe-auto text-decoration-none' onClick={resetPassword}>reset Password</Link> </p>
+                <SocialLogin />
             </div>
         </div>
     );
