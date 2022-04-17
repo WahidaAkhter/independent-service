@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../../Home/Header/Header';
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import auth from '../../../firebase.init';
 
 const Register = () => {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const [
+        createUserWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useCreateUserWithEmailAndPassword(auth);
 
     const navigate = useNavigate();
 
@@ -11,8 +23,17 @@ const Register = () => {
         navigate('/login');
     }
 
-    const handleRegister = event => {
+    if (user) {
+        navigate('/home');
+    }
+
+    const handleRegister = (event) => {
         event.preventDefault();
+
+        // const email = event.target.email.value;
+        // const password = event.target.password.value;
+
+        // createUserWithEmailAndPassword(email, password);
     }
 
     return (
@@ -23,7 +44,7 @@ const Register = () => {
                 <Form onSubmit={handleRegister}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" />
+                        <Form.Control onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Enter email" />
                         <Form.Text className="text-muted">
                             We'll never share your email with anyone else.
                         </Form.Text>
@@ -31,12 +52,12 @@ const Register = () => {
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" />
+                        <Form.Control onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicCheckbox">
                         <Form.Check type="checkbox" label="Check me out" />
                     </Form.Group>
-                    <Button variant="primary" type="submit">
+                    <Button variant="primary" type="submit" onClick={() => createUserWithEmailAndPassword(email, password)}>
                         Register
                     </Button>
                 </Form>

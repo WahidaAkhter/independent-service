@@ -2,6 +2,8 @@ import React, { useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../../Home/Header/Header';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import auth from '../../../firebase.init';
 
 const Login = () => {
 
@@ -10,6 +12,13 @@ const Login = () => {
     const passwordRef = useRef('');
 
     const navigate = useNavigate();
+
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+      ] = useSignInWithEmailAndPassword(auth);
 
     const handleSubmit = event => {
         event.preventDefault();
