@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import Header from '../../Home/Header/Header';
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.init';
 import SocialLogin from '../SocialLogin/SocialLogin';
@@ -23,7 +22,9 @@ const Register = () => {
         error,
     ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
 
-
+    if (user) {
+        navigate('/home');
+    }
 
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
@@ -33,14 +34,12 @@ const Register = () => {
         navigate('/login');
     }
 
-    if (user) {
-        navigate('/home');
-    }
 
 
-    if (error) {
-        errorElement = <p className="text-danger">Error: {error?.message}</p>;
-    }
+
+    // if (error) {
+    //     errorElement = (<div className="text-danger">Error: {error?.message}</div>);
+    // }
 
     if (loading || updating) {
         return <Loading />
@@ -61,7 +60,7 @@ const Register = () => {
 
     return (
         <div>
-            <Header></Header>
+           
             <h2 className='text-primary text-center mt-5 mb-5'>Please Register</h2>
             <div className='container w-50 mx-auto'>
                 <Form onSubmit={handleRegister}>
@@ -88,6 +87,7 @@ const Register = () => {
                         Register
                     </Button>
                 </Form>
+
                 <p>Already Registerd? <Link to='/login' className='text-danger pe-auto text-decoration-none' onClick={navigateLogin}>Please Login</Link> </p>
                 <SocialLogin />
             </div>
