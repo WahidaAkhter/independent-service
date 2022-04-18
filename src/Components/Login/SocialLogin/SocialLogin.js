@@ -2,6 +2,7 @@ import React from 'react';
 import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
+import Loading from '../../Loading/Loading';
 
 const SocialLogin = () => {
 
@@ -11,11 +12,14 @@ const SocialLogin = () => {
 
     let errorElement;
 
+    if(loading){
+        return <Loading/>
+    }
+
     if (error) {
         return (
-            errorElement =<div>
-               <p className='text-danger'>Error: {error.message}</p>
-            </div>
+            errorElement = <p className='text-danger'>Error: {error.message}</p>
+
         );
     }
 

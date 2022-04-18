@@ -13,7 +13,7 @@ const Service = (props) => {
     return (
         <div className='service'>
             <img style={{ width: "27rem" }} src={img} alt="" />
-            <h2>service name:{name}</h2>
+            <h2>Package:{name}</h2>
             <p>Price: {price}</p>
             <p><small>{description}</small></p>
             <button onClick={() => navigateToServiceDetail(id)} className='btn btn-primary'>Book: {name}</button>

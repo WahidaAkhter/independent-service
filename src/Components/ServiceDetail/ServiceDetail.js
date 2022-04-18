@@ -7,10 +7,10 @@ const ServiceDetail = () => {
 
     return (
         <div className='text-center'>
-            <h2>detail services:{serviceId}</h2>
+            <h2>Package Number you choose to book:{serviceId}</h2>
             <div>
                 <Link to="/checkout">
-                    <button> Proceed Checkout</button>
+                    <button className='btn btn-success'> Proceed Your Booking</button>
                 </Link>
             </div>
         </div>

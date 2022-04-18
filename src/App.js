@@ -11,11 +11,13 @@ import Register from './Components/Login/Register/Register';
 import RequireAuth from './Components/Login/RequireAuth/RequireAuth';
 import Checkout from './Components/Checkout/Checkout';
 import Footer from './Components/Home/Footer/Footer';
+import Header from './Components/Home/Header/Header';
 
 function App() {
   return (
     <div >
 
+      <Header/>
       <Routes>
         <Route path="/" element={<Home></Home>}></Route>
 

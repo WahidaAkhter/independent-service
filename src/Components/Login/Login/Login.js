@@ -5,6 +5,9 @@ import Header from '../../Home/Header/Header';
 import { useSignInWithEmailAndPassword, useSendPasswordResetEmail } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.init';
 import SocialLogin from '../SocialLogin/SocialLogin';
+import Loading from '../../Loading/Loading';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
 
@@ -31,6 +34,10 @@ const Login = () => {
         navigate(from, { replace: true });
     }
 
+    if (loading || sending) {
+        return <Loading />
+    }
+
     const handleSubmit = event => {
         event.preventDefault();
 
@@ -45,13 +52,17 @@ const Login = () => {
     }
 
     const resetPassword = async () => {
+
         const email = emailRef.current.value;
+        if (email) {
+            await sendPasswordResetEmail(email);
+            toast('Sent email');
 
-        await sendPasswordResetEmail(email);
-        alert('sent email');
-
+        }
+        else {
+            toast('please enter your email address')
+        }
     }
-
     return (
         <div >
             <Header></Header>
@@ -79,8 +90,9 @@ const Login = () => {
                 </Form>
 
                 <p>New to Weattle? <Link to='/register' className='text-danger pe-auto text-decoration-none' onClick={navigateRegister}>Please Register</Link> </p>
-                <p>Forget Password? <Link to='/register' className='text-danger pe-auto text-decoration-none' onClick={resetPassword}>reset Password</Link> </p>
+                <p>Forget Password? <button className='btn btn-link text-danger pe-auto text-decoration-none' onClick={resetPassword}>reset Password</button> </p>
                 <SocialLogin />
+                <ToastContainer/>
             </div>
         </div>
     );
