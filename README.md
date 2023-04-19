@@ -13,6 +13,6 @@ https://weattle.netlify.app/
  5.i have used firebase to reduce complexity and time .
 
 # Techonology used
-# 1. React Bootstrap
-# 2. React router
-# 3.Firebase
+ 1. React Bootstrap
+ 2. React router
+ 3.Firebase
